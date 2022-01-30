@@ -7,6 +7,8 @@ TagManager:
   - mount
   - ground
   - player
+  - manta
+  - crab
   layers:
   - Default
   - TransparentFX
