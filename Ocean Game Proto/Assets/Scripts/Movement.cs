@@ -101,6 +101,10 @@ public class Movement : MonoBehaviour
             mounted = false;
             mountScript.followPlayer(false);
         }
+        if (Input.GetButton("Fire"))
+        {
+
+        }
     }
 
     void CrabMovement()
