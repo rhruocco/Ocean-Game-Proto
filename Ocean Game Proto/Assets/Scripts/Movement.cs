@@ -5,9 +5,13 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     private Rigidbody2D myRB;
+
+    [SerializeField]
+    GameObject bullet;
+
     bool grounded, mounted;
 
-    float horizontalDir;
+    float horizontalDir, vertDir;
 
     string whatAmIRiding;
 
@@ -27,7 +31,9 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontalDir = Input.GetAxisRaw("Horizontal");
+        GetAxes();
+
+        DismountCheck();
 
         if (!mounted)
         {
@@ -35,15 +41,18 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            if (whatAmIRiding.Equals("manta"))
+            switch(whatAmIRiding)
             {
-                MantaMovement();
-            }
-            if (whatAmIRiding.Equals("crab"))
-            {
-                CrabMovement();
-            }
+                case "crab":
+                    CrabMovement();
+                    break;
+                case "manta":
+                    MantaMovement();
+                    break;
+                default:
+                    break;
 
+            }
         }
 
         //Debug.Log(mounted);
@@ -95,32 +104,35 @@ public class Movement : MonoBehaviour
 
     void MantaMovement()
     {
-        myRB.velocity = new Vector2(horizontalDir * 10, Input.GetAxisRaw("Vertical") * 10);
-        if (Input.GetButton("Fire3"))
+        myRB.velocity = new Vector2(horizontalDir * 10f, vertDir * 10f);
+        if (Input.GetButtonDown("Jump"))
         {
-            mounted = false;
-            mountScript.followPlayer(false);
-        }
-        if (Input.GetButton("Fire"))
-        {
-
+             Instantiate(bullet, transform.position, Quaternion.identity);
         }
     }
 
     void CrabMovement()
     {
-
-        myRB.velocity = new Vector2(horizontalDir * 5f, myRB.velocity.y);
-        if (Input.GetButtonDown("Jump"))
+        if (!grounded)
         {
-            if (grounded)
-            {
-                myRB.velocity = new Vector2(myRB.velocity.x, 2f);
-            }
-            else
-            {
-
-            }
+            vertDir = 0;
+            myRB.AddForce(new Vector2(0, -9f)); 
         }
+        myRB.velocity = new Vector2(horizontalDir * 5f, vertDir * 10f);
+    }
+
+    void DismountCheck()
+    {
+        if (Input.GetButton("Fire3"))
+        {
+            mounted = false;
+            mountScript.followPlayer(false);
+        }
+    }
+
+    void GetAxes()
+    {
+        horizontalDir = Input.GetAxisRaw("Horizontal");
+        vertDir = Input.GetAxisRaw("Vertical");
     }
 }

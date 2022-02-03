@@ -9,6 +9,8 @@ TagManager:
   - player
   - manta
   - crab
+  - bullet
+  - wall
   layers:
   - Default
   - TransparentFX
@@ -48,4 +50,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: bullet
+    uniqueID: 2306069201
     locked: 0

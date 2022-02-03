@@ -29,15 +29,17 @@ public class Mount : MonoBehaviour
     {
         followplayer = yesOrNo;
 
-        //this.GetComponent<BoxCollider2D>().gameObject.SetActive(!yesOrNo);
-        //this.GetComponent<Rigidbody2D>().gameObject.SetActive(!yesOrNo);
+        this.GetComponent<BoxCollider2D>().enabled = !yesOrNo;
+
+        transform.position = new Vector2(player.transform.position.x + 1, player.transform.position.y - 2);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("player") && !followplayer)
+        if (collision.gameObject.CompareTag("player") && followplayer)
         {
             Physics2D.IgnoreCollision(collision.collider, this.GetComponent<Collider2D>());
+            Debug.Log("dadada");
         }
     }
 }
