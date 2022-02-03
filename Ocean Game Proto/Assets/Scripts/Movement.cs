@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
@@ -82,6 +83,10 @@ public class Movement : MonoBehaviour
             mountScript = collision.gameObject.GetComponent<Mount>();
             mountScript.followPlayer(true);
         }
+        if (collision.gameObject.CompareTag("hazard"))
+        {
+            Die();
+        }
 
     }
 
@@ -116,7 +121,7 @@ public class Movement : MonoBehaviour
         if (!grounded)
         {
             vertDir = 0;
-            myRB.AddForce(new Vector2(0, -9f)); 
+            myRB.AddForce(new Vector2(0, -20f)); 
         }
         myRB.velocity = new Vector2(horizontalDir * 5f, vertDir * 10f);
     }
@@ -134,5 +139,10 @@ public class Movement : MonoBehaviour
     {
         horizontalDir = Input.GetAxisRaw("Horizontal");
         vertDir = Input.GetAxisRaw("Vertical");
+    }
+
+    void Die()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
