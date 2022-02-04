@@ -22,12 +22,12 @@ public class Bullet : MonoBehaviour
         if(collision.gameObject.CompareTag("wall"))
         {
             collision.gameObject.SetActive(false);
+            Destroy(this);
 
         }
 
         if(collision.gameObject.CompareTag("player") || collision.gameObject.CompareTag("manta"))
         {
-            Debug.Log("yea");
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>());
         }
     }

@@ -31,7 +31,7 @@ public class Mount : MonoBehaviour
 
         this.GetComponent<BoxCollider2D>().enabled = !yesOrNo;
 
-        transform.position = new Vector2(player.transform.position.x + 1, player.transform.position.y - 2);
+        transform.position = new Vector2(player.transform.position.x + 5, player.transform.position.y - 2);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -41,5 +41,15 @@ public class Mount : MonoBehaviour
             Physics2D.IgnoreCollision(collision.collider, this.GetComponent<Collider2D>());
             Debug.Log("dadada");
         }
+    }
+
+    public void PlayMyAnim(string anim)
+    {
+        GetComponent<Animator>().Play(anim);
+    }
+
+    public void ChangeSprite(Sprite spriteToChangeTo)
+    {
+        GetComponent<SpriteRenderer>().sprite = spriteToChangeTo;
     }
 }

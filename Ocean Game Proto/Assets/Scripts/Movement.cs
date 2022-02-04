@@ -17,6 +17,9 @@ public class Movement : MonoBehaviour
     string whatAmIRiding;
 
     [SerializeField]
+    Sprite mantaDefault, mantaShoot, crabDefault, crabCloseEyes;
+
+    [SerializeField]
     Mount mountScript;
     // Start is called before the first frame update
     void Start()
@@ -112,7 +115,9 @@ public class Movement : MonoBehaviour
         myRB.velocity = new Vector2(horizontalDir * 10f, vertDir * 10f);
         if (Input.GetButtonDown("Jump"))
         {
-             Instantiate(bullet, transform.position, Quaternion.identity);
+            mountScript.PlayMyAnim("mantashoot");
+             Instantiate(bullet, new Vector2(transform.position.x + 2, transform.position.y), Quaternion.identity);
+            
         }
     }
 
@@ -121,8 +126,14 @@ public class Movement : MonoBehaviour
         if (!grounded)
         {
             vertDir = 0;
-            myRB.AddForce(new Vector2(0, -20f)); 
+            myRB.AddForce(new Vector2(0, -10f));
+            mountScript.ChangeSprite(crabCloseEyes);
         }
+        else
+        {
+            mountScript.ChangeSprite(crabDefault);
+        }
+        
         myRB.velocity = new Vector2(horizontalDir * 5f, vertDir * 10f);
     }
 
